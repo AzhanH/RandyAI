@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import CompleteProfile from '../screens/auth/CompleteProfile';
 
 export const AuthSchema = {
   LoginSchema: Yup.object({
@@ -16,8 +15,7 @@ export const AuthSchema = {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password')], 'Passwords must match')
       .required('Confirm Password is required'),
-    firstName: Yup.string().required('First Name is required'),
-    lastName: Yup.string().required('Last Name is required'),
+    userName: Yup.string().required('User Name is required'),
     phone: Yup.string().required('Phone is required'),
   }),
 
@@ -46,8 +44,7 @@ export const authInitialvalues = {
     email: '',
     password: '',
     confirmPassword: '',
-    firstName: '',
-    lastName: '',
+    userName: '',
     phone: '',
   },
   CompleteProfile: {

@@ -7,7 +7,7 @@ export const deviceWidth = Dimensions.get('window').width;
 export const deviceHeight = Dimensions.get('window').height;
 
 export const colors = {
-  primary: '#F92323',
+  primary: '#5CAE83',
   primary2: '#000818',
   secondary: '#0C101F',
   iconBackground: '#F96A57',
@@ -129,7 +129,7 @@ export const screens = {
   mainStack: 'MainStack',
   bottomTabs: 'BottomTabs',
   onBoarding: 'onBoarding',
-  login: 'Login',
+  Login: 'Login',
   signup: 'Signup',
   forgotPass: 'ForgotPassword',
   resetPass: 'ResetPassword',

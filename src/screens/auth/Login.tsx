@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, ImageBackground, StyleSheet, View} from 'react-native';
 import {Formik} from 'formik';
 import useLoginController from '../../controllers/AuthControllers/Login';
 import {colors, navigate, screens, utility} from '../../utilities';
@@ -12,49 +12,50 @@ import {
   CustomTextInput,
   CustomScrollView,
 } from '../../components';
-import {generalImages} from '../../assets';
+import {generalImages, icons} from '../../assets';
+import CustomSwitch from '../../components/CustomSwitch';
 
-// const socialBtn = [
-//   {
-//     id: 1,
-//     icon: icons.googleLogo,
-//     onPress: () => console.log('Here'),
-//   },
-//   ...(utility.isPlatformIOS
-//     ? [
-//         {
-//           id: 2,
-//           icon: icons.appleLogo,
-//           onPress: () => console.log('Here'),
-//         },
-//       ]
-//     : []),
-//   {
-//     id: 3,
-//     icon: icons.facebookLogo,
-//     onPress: () => console.log('Here'),
-//   },
-// ];
-
+const socialBtn = [
+  {
+    id: 1,
+    icon: icons.google,
+    onPress: () => console.log('Here'),
+  },
+  ...(utility.isPlatformIOS
+    ? [
+        {
+          id: 2,
+          icon: icons.apple,
+          onPress: () => console.log('Here'),
+        },
+      ]
+    : []),
+  {
+    id: 3,
+    icon: icons.facebook,
+    onPress: () => console.log('Here'),
+  },
+];
 const Login = () => {
   const {values, functions} = useLoginController();
 
   return (
     <CustomScrollView
-      showBackground
-      contentStyle={{
-        justifyContent: 'flex-end',
-      }}>
+      contentStyle={styles.contentContainerStyle}
+      showBackground>
       <View style={styles.fieldContainer}>
         <Image source={generalImages.avatar} style={styles.avatar} />
+        <Image source={generalImages.appIcon} style={styles.appIcon} />
         <HeadingComp
           layout="first"
-          title="Welcome back"
+          title="Sign In"
           titletxtWeight="bold"
-          titleTxtSize={20}
-          titleTxtColor={colors.white}
-          // subTitle="Welcome Back"
+          titleTxtSize={26}
+          subTitle="Enter your credentials"
+          subTitleTxtSize={16}
+          subTitleTxtWeight="regular"
           containerStyle={styles.containerStyle}
+          titleTxtColor={colors.black}
         />
         <Formik
           initialValues={values.initialValues}
@@ -78,6 +79,9 @@ const Login = () => {
                 keyboardType="email-address"
                 errors={errors.email}
                 focus={touched.email}
+                label="Email Address"
+                required
+                icon={icons.email}
               />
 
               <CustomTextInput
@@ -88,16 +92,44 @@ const Login = () => {
                 onBlur={handleBlur('password')}
                 focus={touched.password}
                 errors={errors.password}
+                label="Password"
+                required
+                icon={icons.lock}
               />
+              <View
+                style={[
+                  styles.row,
+                  {justifyContent: 'space-between', width: '100%'},
+                ]}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <CustomSwitch
+                    setSwitchVal={functions.toggleRememberMe}
+                    switchVal={values.rememberMeVisible}
+                  />
+                  <CustomText
+                    color={colors.black}
+                    style={styles.remeberMeStyle}
+                    fontSize={13}
+                    weight="medium"
+                    onPress={() => console.log('Here')}>
+                    Remember me
+                  </CustomText>
+                </View>
 
-              <CustomText
-                color={colors.white}
-                style={styles.forgotPasswordStyle}
-                fontSize={13}
-                weight="medium"
-                onPress={() => functions.navigateToScreen(screens.forgotPass)}>
-                Forgot Password?
-              </CustomText>
+                <CustomText
+                  color={colors.black}
+                  fontSize={13}
+                  weight="medium"
+                  onPress={() =>
+                    functions.navigateToScreen(screens.forgotPass)
+                  }>
+                  Forgot Password?
+                </CustomText>
+              </View>
 
               <CustomButton title="Login" onPress={handleSubmit} />
             </View>
@@ -107,49 +139,34 @@ const Login = () => {
         <View style={styles.separatorView}>
           <View style={styles.separatorLine} />
           <CustomText
-            color={colors.white}
+            color={colors.black}
             weight="medium"
             style={{marginHorizontal: 10}}>
-            Or Connect with
+            Or Continue With
           </CustomText>
           <View style={styles.separatorLine} />
         </View>
-        <View style={styles.row}></View>
-
-        <CustomText
-          color={colors.white}
-          weight="regular"
-          fontSize={12}
-          style={styles.bottomText}>
-          Continue with Google, Apple or Facebook, you agree to YouTube
-          Premium's{' '}
-          <CustomText
-            color={colors.white}
-            fontSize={12}
-            weight="semibold"
-            onPress={() => navigate(screens.termsAndConditions)}>
-            {`Terms and Conditions`}
-          </CustomText>
-          {' & '}
-          <CustomText
-            fontSize={12}
-            weight="semibold"
-            color={colors.white}
-            onPress={() => navigate(screens.privacyPolicy)}>
-            {`Privacy Policy`}
-          </CustomText>
-        </CustomText>
-
+        <View style={styles.row}>
+          {socialBtn?.map(res => (
+            <IconButton
+              key={res.id}
+              icon={res.icon}
+              onPress={res.onPress}
+              size={25}
+              iconStyle={styles.iconStyle}
+            />
+          ))}
+        </View>
         <CustomText
           style={styles.bottomText}
-          color={colors.white}
+          color={colors.black}
           weight="semibold"
-          fontSize={12}>
-          Not a member?{' '}
+          fontSize={16}>
+          Don’t have an account?{' '}
           <CustomText
             color={colors.primary}
             weight="semibold"
-            fontSize={12}
+            fontSize={16}
             onPress={() => functions.navigateToScreen(screens.signup)}>
             {`Sign up now`}
           </CustomText>
@@ -160,6 +177,10 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
+  contentContainerStyle: {
+    paddingTop: heightPixel(230),
+    paddingHorizontal: 0,
+  },
   separatorView: {
     marginTop: heightPixel(24),
     flexDirection: 'row',
@@ -189,13 +210,13 @@ const styles = StyleSheet.create({
   },
   bottomText: {
     textAlign: 'center',
-    marginTop: heightPixel(25),
+    marginVertical: heightPixel(25),
     marginHorizontal: widthPixel(4),
   },
   containerStyle: {
-    marginTop: heightPixel(utility.isPlatformIOS ? 80 : 30),
     alignItems: 'center',
-    marginBottom: heightPixel(33),
+    marginBottom: heightPixel(15),
+    alignSelf: 'center',
   },
   forgotPasswordStyle: {
     alignSelf: 'flex-end',
@@ -205,9 +226,10 @@ const styles = StyleSheet.create({
     height: widthPixel(60),
     width: widthPixel(60),
     borderRadius: widthPixel(35),
-    backgroundColor: colors.inputColor,
-    borderColor: colors.darkCharcoal,
+    backgroundColor: colors.white,
+    borderColor: colors.primary,
     marginHorizontal: widthPixel(23),
+    borderWidth: 1,
   },
   row: {
     flexDirection: 'row',
@@ -219,8 +241,9 @@ const styles = StyleSheet.create({
   },
   fieldContainer: {
     backgroundColor: colors.white,
-    borderTopLeftRadius: heightPixel(10),
-    borderTopRightRadius: heightPixel(10),
+    borderTopLeftRadius: heightPixel(15),
+    borderTopRightRadius: heightPixel(15),
+    paddingHorizontal: widthPixel(20),
   },
   avatar: {
     height: heightPixel(229),
@@ -229,6 +252,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     top: -heightPixel(180),
+    resizeMode: 'contain',
+  },
+  appIcon: {
+    height: heightPixel(64),
+    width: widthPixel(64),
+    marginTop: heightPixel(23),
+    alignSelf: 'flex-end',
+  },
+  remeberMeStyle: {
+    marginLeft: widthPixel(8),
   },
 });
 

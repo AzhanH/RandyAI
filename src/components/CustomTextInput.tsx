@@ -12,6 +12,7 @@ import CustomText from './CustomText';
 import {CustomTextInputProps} from '../Interfaces';
 import {appShadow, font, heightPixel, widthPixel} from '../utilities/helpers';
 import {colors, fontFamily, utility} from '../utilities';
+import {icons} from '../assets';
 
 const CustomTextInput = forwardRef<TextInput, CustomTextInputProps>(
   (props, ref) => {
@@ -29,6 +30,7 @@ const CustomTextInput = forwardRef<TextInput, CustomTextInputProps>(
       onPressIn,
       errors,
       focus,
+      required,
     } = props;
 
     const [focused, setFocused] = useState<boolean>(false);
@@ -50,13 +52,26 @@ const CustomTextInput = forwardRef<TextInput, CustomTextInputProps>(
     return (
       <View style={{flex: 1}}>
         {label && (
-          <CustomText
-            fontSize={14}
-            weight="semibold"
-            color={colors.white}
-            style={{marginTop: 10, marginBottom: -8}}>
-            {label}
-          </CustomText>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginLeft: widthPixel(8),
+              marginTop: 10,
+              marginBottom: -5,
+            }}>
+            <CustomText fontSize={14} weight="semibold" color={colors.black}>
+              {label}
+            </CustomText>
+            {required && (
+              <CustomText
+                fontSize={14}
+                weight="semibold"
+                color={colors.danger}
+                style={{marginLeft: 1}}>
+                *
+              </CustomText>
+            )}
+          </View>
         )}
 
         <TouchableOpacity
@@ -66,7 +81,11 @@ const CustomTextInput = forwardRef<TextInput, CustomTextInputProps>(
           style={[
             styles.container,
             containerStyle,
-            {borderWidth: focused ? 1 : 0},
+            {
+              borderWidth: focused ? 1 : 0,
+              backgroundColor: focused ? colors.white : `${colors.white}DD`,
+              ...appShadow,
+            },
           ]}>
           {icon && (
             <View style={styles.iconView}>
@@ -82,10 +101,10 @@ const CustomTextInput = forwardRef<TextInput, CustomTextInputProps>(
             {...props}
             ref={ref}
             multiline={multiline}
-            cursorColor={colors.white}
+            cursorColor={colors.black}
             onBlur={() => setFocused(false)}
             onFocus={() => setFocused(true)}
-            placeholderTextColor={colors.white}
+            placeholderTextColor={colors.black}
             autoCapitalize={autoCapitalize || 'none'}
             secureTextEntry={passwordField ? secureText : false}
             style={[
@@ -104,11 +123,11 @@ const CustomTextInput = forwardRef<TextInput, CustomTextInputProps>(
               activeOpacity={0.7}
               style={styles.iconView}
               onPress={() => setSecureText(!secureText)}>
-              {/* <Image
+              <Image
                 resizeMode="contain"
-                source={secureText ? icons.eyeClose : icons.eyeOpen}
-                style={[styles.iconStyle, {tintColor: colors.white}]}
-              /> */}
+                source={secureText ? icons.closedEye : icons.closedEye}
+                style={[styles.iconStyle]}
+              />
             </TouchableOpacity>
           )}
 
@@ -149,8 +168,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: 'rgba(255,255,255,0.2)',
-    backgroundColor: colors.inputColor,
+    borderColor: colors.primary,
+    backgroundColor: colors.white,
     borderWidth: 1,
   },
   iconView: {
@@ -164,10 +183,10 @@ const styles = StyleSheet.create({
   } as ImageStyle,
   textInputStyle: {
     flex: 1,
-    height: 45,
+    height: 42,
     padding: 0,
     marginHorizontal: 8,
-    color: colors.white,
+    color: colors.black,
     fontFamily: fontFamily.Gilroy.regular,
     fontWeight: '600',
   },

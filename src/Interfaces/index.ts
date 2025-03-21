@@ -90,6 +90,7 @@ export interface CustomTextInputProps extends TextInputProps {
   onPressIn?: () => void;
   errors?: string;
   focus?: boolean;
+  required?: boolean;
 }
 
 export interface IHeadingComp {

@@ -7,6 +7,7 @@ import {Dimensions, PixelRatio, Platform, StatusBar} from 'react-native';
 //   RESULTS,
 // } from 'react-native-permissions';
 import {initialWindowMetrics} from 'react-native-safe-area-context';
+import {colors} from './constants';
 // import Toast from 'react-native-toast-message';
 
 const STATUSBAR_HEIGHT = StatusBar.currentHeight || 0;
@@ -44,15 +45,16 @@ export const font = (size: number): number => {
   return heightPixel(size);
 };
 
+
 export const appShadow = {
-  shadowColor: '#ffffff',
+  shadowColor: '#3D3D3D',
   shadowOffset: {
     width: 0,
     height: 2,
   },
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
-  elevation: 5,
+  elevation: 2,
 };
 
 // export const requestNotificationPermission = async () => {

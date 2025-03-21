@@ -1,6 +1,6 @@
 import {Formik} from 'formik';
 import React from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
+import {Image, StatusBar, StyleSheet, View} from 'react-native';
 import {colors, navigate, screens, StatusBarHeight} from '../../utilities';
 import useSignUpController from '../../controllers/AuthControllers/SignUp';
 import {
@@ -15,113 +15,108 @@ import {
   PhoneTextInput,
   CustomTextInput,
   CustomScrollView,
-  AnimatedCheckbox,
 } from '../../components';
+import {generalImages, icons} from '../../assets';
 
 const Signup = () => {
   const {values, functions} = useSignUpController();
 
   return (
     <CustomScrollView
-      showBackground
-      contentStyle={styles.contentContainerStyle}>
-      <HeadingComp
-        layout="first"
-        title="Register Yourself"
-        titleTxtColor={colors.white}
-        titleTxtSize={20}
-        titletxtWeight="bold"
-        containerStyle={styles.headerContainerStyle}
-      />
+      contentStyle={styles.contentContainerStyle}
+      showBackground>
+      <View style={styles.fieldContainer}>
+        <Image source={generalImages.avatar} style={styles.avatar} />
+        <Image source={generalImages.appIcon} style={styles.appIcon} />
+        <HeadingComp
+          layout="first"
+          title="Register Yourself"
+          titleTxtColor={colors.black}
+          titleTxtSize={26}
+          titletxtWeight="bold"
+          containerStyle={styles.headerContainerStyle}
+          subTitle="Enter your credentials"
+          subTitleTxtSize={16}
+          subTitleTxtWeight="regular"
+        />
 
-      <Formik
-        initialValues={values.initialValues}
-        validationSchema={values.schema}
-        onSubmit={functions.handleSignUp}>
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values: data,
-          errors,
-          touched,
-        }) => (
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                // alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
+        <Formik
+          initialValues={values.initialValues}
+          validationSchema={values.schema}
+          onSubmit={functions.handleSignUp}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values: data,
+            errors,
+            touched,
+          }) => (
+            <View>
               <CustomTextInput
                 maxLength={15}
                 returnKeyType="next"
-                placeholder="First Name"
-                containerStyle={{
-                  width: widthPixel(159),
-                  height: heightPixel(50),
-                }}
-                onChangeText={handleChange('firstName')}
-                value={data.firstName}
-                onBlur={handleBlur('firstName')}
-                errors={errors.firstName}
-                focus={touched.firstName}
+                placeholder="User Name"
+                onChangeText={handleChange('userName')}
+                value={data.userName}
+                onBlur={handleBlur('userName')}
+                errors={errors.userName}
+                focus={touched.userName}
+                label="User Name"
+                required
+                icon={icons.profile}
               />
 
               <CustomTextInput
-                maxLength={15}
                 returnKeyType="next"
-                placeholder="Last Name"
-                containerStyle={{
-                  width: widthPixel(159),
-                  height: heightPixel(50),
-                }}
-                onChangeText={handleChange('lastName')}
-                value={data.lastName}
-                errors={errors.lastName}
-                focus={touched.lastName}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                placeholder="Email Address"
+                onChangeText={handleChange('email')}
+                value={data.email}
+                errors={errors.email}
+                focus={touched.email}
+                label="Email Address"
+                required
+                icon={icons.email}
               />
-            </View>
 
-            <CustomTextInput
-              returnKeyType="next"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              placeholder="Email Address"
-              onChangeText={handleChange('email')}
-              value={data.email}
-              errors={errors.email}
-              focus={touched.email}
-            />
+              <PhoneTextInput
+                placeholder="Phone Number"
+                value={data.phone}
+                setValue={handleChange('phone')}
+                errors={errors.phone}
+                focus={touched.phone}
+                label="Phone Number"
+                required
+              />
 
-            <PhoneTextInput
-              placeholder="Phone Number"
-              value={data.phone}
-              setValue={handleChange('phone')}
-              errors={errors.phone}
-              focus={touched.phone}
-            />
+              <CustomTextInput
+                passwordField
+                placeholder="Password"
+                returnKeyType="next"
+                onChangeText={handleChange('password')}
+                value={data.password}
+                errors={errors.password}
+                focus={touched.password}
+                label="Password"
+                required
+                icon={icons.lock}
+              />
 
-            <CustomTextInput
-              passwordField
-              placeholder="Password"
-              returnKeyType="next"
-              onChangeText={handleChange('password')}
-              value={data.password}
-              errors={errors.password}
-              focus={touched.password}
-            />
+              <CustomTextInput
+                passwordField
+                placeholder="Confirm Password"
+                value={data.confirmPassword}
+                onChangeText={handleChange('confirmPassword')}
+                errors={errors.confirmPassword}
+                focus={touched.confirmPassword}
+                label="Confirm Password"
+                required
+                icon={icons.lock}
+              />
 
-            <CustomTextInput
-              passwordField
-              placeholder="Confirm Password"
-              value={data.confirmPassword}
-              onChangeText={handleChange('confirmPassword')}
-              errors={errors.confirmPassword}
-              focus={touched.confirmPassword}
-            />
-
-            <AnimatedCheckbox
+              {/* <AnimatedCheckbox
               size={20}
               checked={values.check}
               checkMarkColor={colors.white}
@@ -152,32 +147,32 @@ const Signup = () => {
                   </CustomText>
                 </View>
               }
-            />
+            /> */}
 
-            <CustomButton
-              gradient
-              title="Register"
-              btnStyle={styles.btnStyle}
-              onPress={handleSubmit}
-            />
-          </View>
-        )}
-      </Formik>
+              <CustomButton
+                title="Sign Up"
+                btnStyle={styles.btnStyle}
+                onPress={handleSubmit}
+              />
+            </View>
+          )}
+        </Formik>
 
-      <CustomText
-        style={styles.bottomText}
-        color={colors.white}
-        weight="semibold"
-        fontSize={12}>
-        Already a member?
         <CustomText
-          color={colors.primary}
+          style={styles.bottomText}
+          color={colors.black}
           weight="semibold"
-          fontSize={12}
-          onPress={() => functions.navigateToScreen(screens.login)}>
-          {` Login`}
+          fontSize={12}>
+          Have an account already?
+          <CustomText
+            color={colors.primary}
+            weight="semibold"
+            fontSize={12}
+            onPress={() => functions.navigateToScreen(screens.Login)}>
+            {` Login`}
+          </CustomText>
         </CustomText>
-      </CustomText>
+      </View>
     </CustomScrollView>
   );
 };
@@ -202,7 +197,29 @@ const styles = StyleSheet.create({
     marginBottom: heightPixel(21),
   },
   contentContainerStyle: {
-    paddingTop: BOTTOMBAR_HEIGHT,
+    paddingTop: heightPixel(230),
+    paddingHorizontal: 0,
+  },
+  fieldContainer: {
+    backgroundColor: colors.white,
+    borderTopLeftRadius: heightPixel(15),
+    borderTopRightRadius: heightPixel(15),
+    paddingHorizontal: widthPixel(20),
+  },
+  avatar: {
+    height: heightPixel(229),
+
+    width: widthPixel(164),
+    position: 'absolute',
+    alignSelf: 'center',
+    top: -heightPixel(180),
+    resizeMode: 'contain',
+  },
+  appIcon: {
+    height: heightPixel(64),
+    width: widthPixel(64),
+    marginTop: heightPixel(23),
+    alignSelf: 'flex-end',
   },
 });
 
