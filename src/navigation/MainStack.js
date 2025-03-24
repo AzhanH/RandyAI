@@ -4,7 +4,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {headerLeftTitle} from './NavigationOptions';
 import {colors, screens} from '../utilities';
 // import {BackButton} from '../components';
-import {Login, Signup} from '../screens';
+import {
+  ForgotPassword,
+  Login,
+  OtpVerification,
+  ResetPassword,
+  Signup,
+} from '../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,13 +41,22 @@ export default function MainStack() {
       <Stack.Screen
         name={screens.signup}
         component={Signup}
-        options={{
-          ...headerLeftTitle(''),
-          headerTransparent: true,
-          headerStyle: {
-            backgroundColor: colors.transparent,
-          },
-        }}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={screens.forgotPass}
+        component={ForgotPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={screens.otpVerification}
+        component={OtpVerification}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={screens.resetPass}
+        component={ResetPassword}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

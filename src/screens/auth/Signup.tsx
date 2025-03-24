@@ -1,6 +1,12 @@
 import {Formik} from 'formik';
 import React from 'react';
-import {Image, StatusBar, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {colors, navigate, screens, StatusBarHeight} from '../../utilities';
 import useSignUpController from '../../controllers/AuthControllers/SignUp';
 import {
@@ -30,7 +36,7 @@ const Signup = () => {
         <Image source={generalImages.appIcon} style={styles.appIcon} />
         <HeadingComp
           layout="first"
-          title="Register Yourself"
+          title="Sign Up"
           titleTxtColor={colors.black}
           titleTxtSize={26}
           titletxtWeight="bold"
@@ -90,7 +96,6 @@ const Signup = () => {
                 label="Phone Number"
                 required
               />
-
               <CustomTextInput
                 passwordField
                 placeholder="Password"
@@ -116,6 +121,20 @@ const Signup = () => {
                 icon={icons.lock}
               />
 
+              <TouchableOpacity
+                onPress={() => console.log('pressed')}
+                activeOpacity={0.9}>
+                <CustomTextInput
+                  placeholder=""
+                  editable={false}
+                  returnKeyType="next"
+                  label="Upload Profile Image"
+                  required
+                  rightIcon={icons.uploadImage}
+                  onPress={() => console.log('pressed')}
+                  rightIconSize={15}
+                />
+              </TouchableOpacity>
               {/* <AnimatedCheckbox
               size={20}
               checked={values.check}
@@ -162,12 +181,12 @@ const Signup = () => {
           style={styles.bottomText}
           color={colors.black}
           weight="semibold"
-          fontSize={12}>
+          fontSize={16}>
           Have an account already?
           <CustomText
             color={colors.primary}
             weight="semibold"
-            fontSize={12}
+            fontSize={16}
             onPress={() => functions.navigateToScreen(screens.Login)}>
             {` Login`}
           </CustomText>

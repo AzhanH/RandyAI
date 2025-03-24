@@ -16,4 +16,5 @@ export const icons = {
   email: require('./icons/email-icon.png'),
   profile: require('./icons/profile-circle.png'),
   lock: require('./icons/lock.png'),
+  uploadImage: require('./icons/uploadImg.png'),
 };

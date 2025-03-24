@@ -56,6 +56,7 @@ export const colors = {
   lightBlue: '#04D1FE',
   inviteColor: '#00B851',
   borderColor: '#494C61',
+  placeHolderColor: '#3D3D3D',
 };
 
 export const appStyles = StyleSheet.create({

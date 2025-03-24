@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
+    backgroundColor: 'red',
   },
 });
 

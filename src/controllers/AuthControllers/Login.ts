@@ -13,6 +13,10 @@ const useLoginController = () => {
     };
     navigate(screens.bottomTabs);
   };
+
+  const handleForgotPassword = () => {
+    navigate(screens.forgotPass);
+  };
   const navigateToScreen = (name: string) => {
     navigate(name);
   };
@@ -27,6 +31,7 @@ const useLoginController = () => {
       handleSignIn,
       navigateToScreen,
       toggleRememberMe,
+      handleForgotPassword,
     },
   };
 };

@@ -104,7 +104,7 @@ const CustomTextInput = forwardRef<TextInput, CustomTextInputProps>(
             cursorColor={colors.black}
             onBlur={() => setFocused(false)}
             onFocus={() => setFocused(true)}
-            placeholderTextColor={colors.black}
+            placeholderTextColor={colors.placeHolderColor}
             autoCapitalize={autoCapitalize || 'none'}
             secureTextEntry={passwordField ? secureText : false}
             style={[
